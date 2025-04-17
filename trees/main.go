@@ -9,11 +9,13 @@ import (
 )
 
 func main() {
-	printFiles("../")
+	printFilesBFS("../")
+	fmt.Println("")
+	printFilesDFS("../")
 }
 
 // print all files recursively beginning with directory
-func printFiles(startDir string) {
+func printFilesBFS(startDir string) {
 	dirQ := list.New()
 	dirQ.PushBack(startDir)
 
@@ -50,4 +52,37 @@ func printFiles(startDir string) {
 			}
 		}
 	}
+}
+
+func printFilesDFS(dir string) {
+	startDir := dir
+
+	var dfs func(dir string)
+	dfs = func(dir string) {
+		// Ignore directories beginning with .git
+		if strings.Contains(dir, ".git") {
+			return
+		}
+
+		items, err := os.ReadDir(dir)
+		if err != nil {
+			fmt.Printf("Error: %v", err)
+			return
+		}
+
+		for _, item := range items {
+			fullPath := filepath.Join(dir, item.Name())
+			if item.IsDir() {
+				dfs(fullPath)
+			} else {
+				if dir == startDir {
+					fmt.Println(dir)
+				} else {
+					fmt.Println(strings.Replace(dir, startDir, "", 1) + "/")
+				}
+				fmt.Printf("  - %s\n", item.Name())
+			}
+		}
+	}
+	dfs(dir)
 }

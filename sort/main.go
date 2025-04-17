@@ -8,10 +8,11 @@ import (
 
 func main() {
 	unsorted := files.ProcessDictionary("../common-words.txt")
-	sorted, operations := quickSort(unsorted)
+	unsorted2 := files.ProcessDictionary("../words_alpha.txt")
+	sorted, operations := quickSort(unsorted2)
 	fmt.Printf("sorted %d elements in %d operations using quick sort\n", len(sorted), operations)
 
-	sorted, operations = insertionSort(unsorted)
+	sorted, operations = insertionSort(unsorted2)
 	fmt.Printf("sorted %d elements in %d operations using insertion sort\n", len(sorted), operations)
 
 	sorted, operations = selectionSort(unsorted)
