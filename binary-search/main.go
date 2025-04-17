@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strings"
+	"grokking-algorithms/files"
 )
 
 func main() {
-	array := processDictionary("words_alpha.txt")
+
+	// fmt.Println(sum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9}))
+
+	array := files.ProcessDictionary("../words_alpha.txt")
 	word := "zoo"
 
 	index, guesses := binarySearch(array, word)
@@ -17,24 +19,7 @@ func main() {
 	fmt.Printf("index of %s: %d\titerations using sequential search: %d\n", word, index, guesses)
 }
 
-func processDictionary(filename string) (dictionary []string) {
-	bytes, err := os.ReadFile(filename)
-	if err != nil {
-		panic(err)
-	}
-
-	for line := range strings.SplitSeq(string(bytes), "\n") {
-		before, word, found := strings.Cut(line, "\t")
-		if found {
-			dictionary = append(dictionary, word)
-		} else {
-			dictionary = append(dictionary, strings.TrimSpace(before))
-		}
-	}
-
-	return dictionary
-}
-
+// O(n)
 func sequentialSearch(array []string, item string) (index int, guesses int) {
 	for index, str := range array {
 		guesses += 1
@@ -46,6 +31,7 @@ func sequentialSearch(array []string, item string) (index int, guesses int) {
 	return -1, guesses
 }
 
+// O(logn)
 func binarySearch(array []string, item string) (index int, guesses int) {
 	low := 0
 	high := len(array) - 1
@@ -68,4 +54,12 @@ func binarySearch(array []string, item string) (index int, guesses int) {
 	}
 
 	return -1, guesses
+}
+
+func sum(ints []int) (total int) {
+	if len(ints) == 0 {
+		return 0
+	}
+
+	return ints[0] + sum(ints[1:])
 }
