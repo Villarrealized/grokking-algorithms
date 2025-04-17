@@ -11,15 +11,14 @@ func main() {
 	sorted, operations := quickSort(unsorted)
 	fmt.Printf("sorted %d elements in %d operations using quick sort\n", len(sorted), operations)
 
-	sorted, operations = selectionSort(unsorted)
-	fmt.Printf("sorted %d elements in %d operations using selection sort\n", len(sorted), operations)
-
 	sorted, operations = insertionSort(unsorted)
 	fmt.Printf("sorted %d elements in %d operations using insertion sort\n", len(sorted), operations)
 
+	sorted, operations = selectionSort(unsorted)
+	fmt.Printf("sorted %d elements in %d operations using selection sort\n", len(sorted), operations)
+
 	sorted, operations = bubbleSort(unsorted)
 	fmt.Printf("sorted %d elements in %d operations using bubble sort\n", len(sorted), operations)
-
 }
 
 // O(n^2)
@@ -57,8 +56,8 @@ func insertionSort(arr []string) (sorted []string, operations int) {
 	copy(sorted, arr)
 
 	for left := 1; left < length; left++ {
-		for right := left; right > 0 && arr[right-1] > arr[right]; right-- {
-			arr[right], arr[right-1] = arr[right-1], arr[right]
+		for right := left; right > 0 && sorted[right-1] > sorted[right]; right-- {
+			sorted[right], sorted[right-1] = sorted[right-1], sorted[right]
 			operations += 1
 		}
 	}
